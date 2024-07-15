@@ -1,26 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Image} from 'react-native';
+import { StyleSheet, View} from 'react-native';
+import * as ImagePicker from 'expo-image-picker'
 
 import ImageViewer from './components/ImageViewer'
 import Button from './components/Button'
 
 const PlaceholderImage = require('./assets/images/background-image.png')
-
-
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <View style = {styles.imageContainer}>
-          <ImageViewer source={PlaceholderImage}></ImageViewer>
-      </View>
-        <View style={styles.footerContainer}>
-            <Button theme="primary" label="Choose a photo"></Button>
-            <Button label="Use this photo"></Button>
-        </View>
-      <StatusBar style="auto"/>
-    </View>
-  );
-}
 
 const styles = StyleSheet.create({
     container: {
@@ -35,5 +20,34 @@ const styles = StyleSheet.create({
     footerContainer: {
         flex: 1 / 3,
         alignItems: 'center'
-    }
+    },
 });
+
+export default function App() {
+    const pickImageAsync = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            allowsEditing: true,
+            quality: 1,
+        });
+
+        if (!result.canceled) {
+            console.log(result)
+        } else {
+            alert('You did have not selected any image');
+        }
+    };
+
+    return (
+        <View style={styles.container}>
+            <View style={styles.imageContainer}>
+                <ImageViewer placeholderImageSource={PlaceholderImage}></ImageViewer>
+            </View>
+            <View style={styles.footerContainer}>
+                <Button theme="primary" label="Choose a photo"></Button>
+                <Button label="Use this photo"></Button>
+            </View>
+            <StatusBar style="auto"/>
+        </View>
+    );
+}
+
