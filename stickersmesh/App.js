@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View} from 'react-native';
 import * as ImagePicker from 'expo-image-picker'
+import { useState} from "react";
 
 import ImageViewer from './components/ImageViewer'
 import Button from './components/Button'
@@ -24,27 +25,43 @@ const styles = StyleSheet.create({
 });
 
 export default function App() {
+    const [selectedImage, setSelectedImage] = useState(null);
+    const [showAppOptions, setShowAppOptions] = useState(false);
+
     const pickImageAsync = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
-            allowsEditing: true,
+            allowsEditing: true, // allows user to crop image and dat
             quality: 1,
         });
 
         if (!result.canceled) {
-            console.log(result)
+            setSelectedImage(result.assets[0].uri);
+            setShowAppOptions(true);
         } else {
-            alert('You did have not selected any image');
+            alert('You have not selected any image 😱');
         }
     };
 
     return (
         <View style={styles.container}>
             <View style={styles.imageContainer}>
-                <ImageViewer placeholderImageSource={PlaceholderImage}></ImageViewer>
+                <ImageViewer
+                    placeholderImageSource={PlaceholderImage}
+                    selectedImage={selectedImage}/>
             </View>
+            {showAppOptions ? (
+                <View/>
+            ) : (
+                <View style={style.footerContainer}>
+                    <Button theme='primary' label="Choose a photo" onPress={pickImageAsync}/>
+                    <Button label="use this photo" onPress={() => setShowAppOptions(true)}/>
+                </View>
+            )
+
+            }
             <View style={styles.footerContainer}>
-                <Button theme="primary" label="Choose a photo"></Button>
-                <Button label="Use this photo"></Button>
+                <Button theme="primary" label="Choose a photo" onPress={pickImageAsync}></Button>
+                <Button label="Use this photo" onPress={() => setShowAppOptions(true)}></Button>
             </View>
             <StatusBar style="auto"/>
         </View>
