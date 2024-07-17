@@ -7,6 +7,8 @@ import ImageViewer from './components/ImageViewer'
 import Button from './components/Button'
 import IconButton from "./components/IconButton";
 import CircleButton from "./components/CircleButton";
+import EmojiPicker from "./components/EmojiPicker";
+
 
 const PlaceholderImage = require('./assets/images/background-image.png')
 
@@ -37,12 +39,17 @@ const styles = StyleSheet.create({
 export default function App() {
     const [selectedImage, setSelectedImage] = useState(null);
     const [showAppOptions, setShowAppOptions] = useState(false);
+    const [isModalVisible, setIsModalVisible] = useState(false)
     const onReset = () => {
         setShowAppOptions(false);
     };
     const onAddSticker = () => {
-        // laters
+        setIsModalVisible(true);
     };
+
+    const onModalClose = () => {
+        setIsModalVisible(false);
+    }
 
     const onSaveImageAsync = () => {
         // laters
@@ -73,12 +80,12 @@ export default function App() {
                 <View style={styles.optionsContainer}>
                     <View style={styles.optionsRow}>
                         <IconButton icon={'refresh'} label={'Reset'} onPress={onReset}/>
-                        <CircleButton onPress={onAddSticker()}/>
+                        <CircleButton onPress={onAddSticker}/>
                         <IconButton icon={'save-alt'} label={'Save'} onPress={onSaveImageAsync}/>
                     </View>
                 </View>
             ) : (
-                <View style={style.footerContainer}>
+                <View style={styles.footerContainer}>
                     <Button theme='primary' label="Choose a photo" onPress={pickImageAsync}/>
                     <Button label="use this photo" onPress={() => setShowAppOptions(true)}/>
                 </View>
@@ -89,6 +96,8 @@ export default function App() {
                 <Button theme="primary" label="Choose a photo" onPress={pickImageAsync}></Button>
                 <Button label="Use this photo" onPress={() => setShowAppOptions(true)}></Button>
             </View>
+            <EmojiPicker isVisible={isModalVisible} onClose={onModalClose}>
+            </EmojiPicker>
             <StatusBar style="auto"/>
         </View>
     );
