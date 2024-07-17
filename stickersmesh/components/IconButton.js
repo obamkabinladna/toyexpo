@@ -1,7 +1,7 @@
 import {Pressable, StyleSheet, Text} from "react-native";
 import MaterialIcons from '@expo/vector-icons'
 
-const styles = Stylesheet.create({
+const styles = StyleSheet.create({
     iconButton: {
         justifyContent: 'center',
         alignItems: 'center',
