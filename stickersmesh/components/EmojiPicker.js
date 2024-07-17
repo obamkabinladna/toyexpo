@@ -1,5 +1,4 @@
 import {Modal, View, Text, Pressable, StyleSheet} from "react-native";
-import {useState} from 'react';
 import {MaterialIcons} from "@expo/vector-icons";
 
 const styles = StyleSheet.create({
