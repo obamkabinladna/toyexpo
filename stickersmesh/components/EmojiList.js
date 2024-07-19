@@ -33,7 +33,7 @@ export default function EmojiLIst({ onSelect, onCloseModal}){
             showsHorizontalScrollIndicator={Platform.OS==='web'}
             data={emoji}
             contentContainerStyle={styles.listContainer}
-            renderItem{({item, index}) => (
+            renderItem={({item, index}) => (
                 <Pressable
                     onPress={() => {
                         onSelect(item);
