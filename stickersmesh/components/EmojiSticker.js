@@ -5,6 +5,7 @@ import Animated, {useAnimatedStyle, useSharedValue, withSpring} from 'react-nati
 const scaleImage = useSharedValue(imageSize);
 
 const doubleTap = Gesture.Tap()
+    // this might be wrong
     .numberOfTaps(2)
     .onStart(() => {
         if (scaleImage.value !== imageSize * 2) {
